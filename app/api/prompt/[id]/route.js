@@ -19,28 +19,19 @@ export const GET = async (request, { params }) => {
 // PATCH (update)
 export const PATCH = async (request, { params }) => {
   const { prompt, tag } = await request.json();
-  console.log("prompt: ", prompt);
-  console.log("tag: ", tag);
 
   try {
     await connectToDB();
-    const existingPrompt = await Prompt.findById(params.id);
 
-    if (!existingPrompt) {
-      return new Response("Prompt not found", { status: 404 });
-    }
-
-    console.log(
-      "exising prompt before update: ",
-      JSON.stringify(existingPrompt)
-    );
-
-    existingPrompt.prompt = prompt;
-    existingPrompt.tag = tag;
-
-    console.log(
-      "exising prompt after update: ",
-      JSON.stringify(existingPrompt)
+    const existingPrompt = await Prompt.findByIdAndUpdate(
+      params.id,
+      {
+        prompt,
+        tag,
+      },
+      {
+        new: true,
+      }
     );
 
     return new Response(JSON.stringify(existingPrompt), { status: 200 });
