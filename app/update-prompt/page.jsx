@@ -10,8 +10,6 @@ const EditPrompt = () => {
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
 
-  console.log("promptId: ", promptId);
-
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     prompt: "",
@@ -46,8 +44,6 @@ const EditPrompt = () => {
           tag: post.tag,
         }),
       });
-
-      console.log("response: ", response);
 
       if (response.ok) {
         router.push("/");
